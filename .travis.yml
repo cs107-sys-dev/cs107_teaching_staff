@@ -1,12 +1,24 @@
 # Configuration file for TravisCI builds
 language: python
 python:
-    - "3.6"
+  - "3.6"
 
-# This project is configured with PEP517 via setuptools
+# These packages we only want in our CI builds
+before_install:
+  - python -m pip install coverage
+
+# This installs our project in the running container, convenient with PEP517 via
+# setuptools (Lecture 08)
 install:
-    (cd python_project && python -m pip install .)
+  - (cd python_project && python -m pip install .)
 
-# Run the tests
+# Run the tests and create coverage reports
 script:
-    - (cd python_project/tests && python -m unittest discover)
+  - (cd python_project/tests && coverage xml)
+  # - (cd python_project/tests && python -m unittest discover) # tests only
+
+# Upload the coverage report to codecov
+after_success:
+  - curl -Os https://uploader.codecov.io/latest/linux/codecov
+  - chmod +x codecov
+  - ./codecov -t ${CODECOV_TOKEN}
