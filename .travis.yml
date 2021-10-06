@@ -1,11 +1,11 @@
 # Configuration file for TravisCI builds
 language: python
 python:
-    - "3.9"
+    - "3.6"
 
 # This project is configured with PEP517 via setuptools
 install:
-    (cd python_project && python -m pip install --use-feature=in-tree-build .)
+    (cd python_project && python -m pip install .)
 
 # Run the tests
 script:
