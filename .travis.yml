@@ -14,8 +14,8 @@ install:
 
 # Run the tests and create coverage reports
 script:
-  - (cd python_project/tests && coverage xml)
-  # - (cd python_project/tests && python -m unittest discover) # tests only
+  - (cd python_project/tests && coverage run -m unittest discover) # run tests
+  - (cd python_project/tests && coverage xml) # generate coverage
 
 # Upload the coverage report to codecov
 after_success:
